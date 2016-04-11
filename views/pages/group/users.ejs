@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+ 
+
+         <% include ../top %>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"><%=result.name%> 成员列表</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            成员信息
+                        </div>
+                        <form action="add" method="post" id="form1">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6" >
+                                        <div id="info">
+                                        <div class="form-group">
+                                            <label>项目组名称: <%=result.name%></label>
+                                        </div>
+                                       
+                                        <% result.users.forEach(function(user){
+                                            %>
+                                        <div class="form-group">
+                                            <label>名称: <%=user.user.name%> (<%=user.user.email%>)</label> <a href="/group/delUsers?groupId=<%=result.groupId%>&userId=<%=user.user.id%>">删除</a>
+                                        </div>
+                                            <%
+                                        }) %>
+
+                                        </div>    
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                </form>
+                            </div>
+                             
+                                    
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                
+
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            添加成员
+                        </div>
+                        <form action="add" method="post" id="form1">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    
+                                        <div class="form-group">
+                                            <label>名称</label>
+                                            <input class="form-control" id="name" name="name">
+                                        </div>
+                                         
+
+                                        <button type="button" class="btn btn-default" onclick="adds()" id="add" >添加</button> 
+                                                 
+
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                </form>
+                            </div>
+                             
+                                    
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                 
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <script>
+       function adds(){
+            var name = $("#name").val()
+            var id = <%=result.groupId%>
+            $.ajax({
+                type: 'POST',
+                url: '/group/addUsers' ,
+                data: {name:name,groupId:id},
+                success: function(data){
+                    if(data.errMsg==undefined){
+                        window.location="/group/users?id="+id
+                    }else{
+                    alert(data.errMsg)
+                    }
+                }
+            });
+       }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+ 
+
+         <% include top %>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"> <%=info.name%> 项目信息</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            项目基础信息
+                        </div>
+                        <form action="add" method="post" id="form1">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6" >
+                                        <div id="info">
+                                        <div class="form-group">
+                                            <label>项目名称: <%=info.name%></label>
+                                             
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目负责人(乙方): <%=info.projectManagerNameY%></label>
+                                             
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目负责人联系方式(乙方): <%=info.projectManagerPhoneY%></label>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目负责人(甲方): <%=info.projectManagerNameJ%></label>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目负责人联系方式(甲方): <%=info.projectManagerPhoneJ%></label>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label>项目所属公司: <%=info.company%></label>
+                                            
+                                        </div>
+                                        <div class="form-group">
+                                            <label>所属项目组: <%=group.name%></label>
+                                            
+                                        </div>
+
+                                        
+
+                                        </div>
+                                     
+
+                                       
+
+
+                                        
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                </form>
+                            </div>
+                             
+                                    
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                 
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            详细信息
+                        </div>
+                        <form action="add" method="post" id="form1">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6" >
+                                        <div id="info">
+                                        
+
+                                        <% template.forEach(function(d){
+                                            %>
+                                        <div class="form-group" id='<%=d.id %>_form'>
+                                            <label><%=d.name %>: <%=d.value%></label>
+                                            <input type='hidden' value="<%=d.name %>" id='<%=d.id %>_name' ><input type='hidden' value="<%=d.value %>" id='<%=d.id %>_value' ><a href='#' onclick='edit("<%=d.id %>")'> [修改]</a>
+                                        </div>
+                                            <%
+                                        }) %>
+
+                                        </div>                                                                       
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                </form>
+                            </div>
+                             
+                                    
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            添加详细信息
+                        </div>
+                        <form action="add" method="post" id="form1">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    
+                                        <div class="form-group">
+                                            <label>字段名称</label>
+                                            <input class="form-control" id="name" name="name">
+                                        </div>
+                                         <div class="form-group">
+                                            <label>内容</label>
+                                            <input class="form-control" id="content" name="content">
+                                        </div>
+
+                                        <button type="button" class="btn btn-default" onclick="adds('add')" id="add" >添加</button> 
+                                        <button type="button" class="btn btn-default" onclick="adds('update')" id="update" style="display:none" >保存</button> 
+                                        <input type="hidden" value="" id="infoId" />       
+                                        <button type="button" class="btn btn-default" onclick="cleans()" id="clean" style="display:none" >取消</button>
+                                        <button type="button" class="btn btn-default" onclick="del()" id="delete" style="display:none" >删除</button>           
+
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                </form>
+                            </div>
+                             
+                                    
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                 
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+    <script>
+        var data = new Array();
+        var i = 0;
+        function adds(type){
+            var name = $("#name").val();
+            var content = $("#content").val();
+            if(type=='add'){
+                save(name,content,<%=info.id%>)
+            }else{
+
+                update(name,content,$("#infoId").val(),<%=info.id%>)
+            }
+        }
+
+        function edit(id){
+            //
+            $("#infoId").val(id);
+            $("#name").val($("#"+id+"_name").val());
+            $("#content").val($("#"+id+"_value").val());
+            $("#update").show();
+            $("#clean").show();
+            $("#delete").show();
+            $("#add").hide();
+        }
+
+        function cleans(){
+            $("#update").hide();
+            $("#clean").hide();
+            $("#delete").hide();
+            $("#add").show();
+            $("#name").val('');
+            $("#content").val('');
+        }
+
+        function del(id){
+            var id = $("#infoId").val();
+            $.ajax({
+                type: 'POST',
+                url: '/project/delInfo' ,
+                data: {id:id} ,
+                success: function(data){
+                     $("#"+id+"_form").hide();
+                     cleans()
+                },
+            });
+        }
+
+        function save(n,v,id){
+             $.ajax({
+                type: 'POST',
+                url: '/project/addInfo' ,
+                data: {name:n,value:v,id:id} ,
+                success: function(data){
+                    console.log('asd')
+                    var html = $("#info").html();
+                     html = html+"<div class='form-group' id='"+data.id+"_form' ><label>"+n+": "+v+"</label><input type='hidden' value="+n+" id='"+data.id+"_name' ><input type='hidden' value="+v+" id='"+data.id+"_value' ><a href='#' onclick='edit("+data.id+")'> [修改]</a></div>"
+                    $("#info").html(html);
+                },
+            });
+        }
+
+        function update(n,v,id,projectId){
+            $("#"+id+"_form").hide();
+            $.ajax({
+                type: 'POST',
+                url: '/project/editInfo' ,
+                data: {name:n,value:v,id:id,projectId:projectId} ,
+                success: function(data){
+                    console.log('asd')
+                    var html = $("#info").html();
+                     html = html+"<div class='form-group' id='"+data.id+"_form' ><label>"+n+": "+v+"</label><input type='hidden' value="+n+" id='"+data.id+"_name' ><input type='hidden' value="+v+" id='"+data.id+"_value' ><a href='#' onclick='edit("+data.id+")'> [修改]</a></div>"
+                    $("#info").html(html);
+                },
+            });
+        }
+    </script>
+
+</body>
+
+</html>

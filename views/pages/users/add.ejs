@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+
+         <% include ../top %>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">新建成员</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            成员信息
+                        </div>
+                        <form action="add" method="post" id="form1">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <label>*名称</label>
+                                            <input class="form-control" name="name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>*邮箱</label>
+                                            <input class="form-control" name="email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>*密码</label>
+                                            <input class="form-control" name="password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>*类型</label>
+                                            <select class="form-control" name="type">
+                                                
+                                                 <option value="0" >成员</option>
+                                                <option value="1" >管理员</option>
+                                               
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-default">提交</button>
+                                        <button type="reset" onclick="back()" class="btn btn-default">返回</button>
+                                    </form>
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
+                                </form>
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTables-example').DataTable({
+                  responsive: true
+            });
+        });
+
+        function back(){
+            window.location="/group/list"
+        }
+
+    </script>
+
+</body>
+
+</html>
